@@ -7,8 +7,8 @@
 //
 
 #import "TCMasterViewController.h"
-
 #import "TCDetailViewController.h"
+#import "Event.h"
 
 @interface TCMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -36,13 +36,42 @@
     // set up the buttons
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
+    //self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItemAdd target: self action:@selector(addEvent);
+                      
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
-    addButton.enabled = NO;
+    
+    //addButton.enabled = NO;
     self.navigationItem.rightBarButtonItem = addButton;
     
     // Start the location manager
-    [[self locationManager] startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Event"];
+    
+    // create a qualifier
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"latitude >= 30.0"];
+    // attach it to the request
+    [request setPredicate:predicate];
+    
+    // error handling
+    NSError *error = nil;
+    
+    // save the query results
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"fetchError: %@", error);
+    }
+    if(results.count > 0){
+        Event *event = [results objectAtIndex:0];
+        
+        NSLog(@"eventLatitude: %@", event.latitude);
+        NSLog(@"eventLongitude: %@", event.longitude);
+        NSLog(@"eventCreationDate: %@", event.creationDate);
+    }
+    
 }
+#pragma mark - Location Manager
 
 // the location is an asynchronous call
 - (CLLocationManager *)locationManager {
@@ -83,7 +112,7 @@
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    [newManagedObject setValue:[NSDate date] forKey:@"creationDate"];
     
     // Save the context.
     NSError *error = nil;
@@ -178,7 +207,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -263,7 +292,30 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    cell.textLabel.text = [[object valueForKey:@"creationDate"] description];
 }
-
+#pragma mark - Event Methods
+- (void) addEvent{
+    CLLocation *location = [self.locationManager location];
+    if(!location)
+    {
+        return;
+    }
+    Event *event = [NSEntityDescription
+                    insertNewObjectForEntityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    CLLocationCoordinate2D coord = location.coordinate;
+    [event setLatitude: [NSNumber numberWithDouble:coord.latitude]];
+    [event setLongitude:[NSNumber numberWithDouble:coord.longitude]];
+    [event setCreationDate:[NSDate date]];
+    
+    NSError *error = nil;
+    
+    // if it's 'not yes', save the error
+    // this is like catching an exception - you are handling errors
+    if(![self.managedObjectContext save:&error]){
+        NSLog(@"save errored: %@", [error localizedDescription]);
+    } else {
+        
+    }
+}
 @end

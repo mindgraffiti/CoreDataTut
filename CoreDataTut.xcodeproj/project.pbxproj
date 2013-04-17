@@ -23,6 +23,7 @@
 		AF9A2748171E24A000757A4F /* TCMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF9A2746171E24A000757A4F /* TCMasterViewController.xib */; };
 		AF9A274B171E24A000757A4F /* TCDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF9A2749171E24A000757A4F /* TCDetailViewController.xib */; };
 		AF9A2752171E253400757A4F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9A2751171E253400757A4F /* CoreLocation.framework */; };
+		AF9E5052171F5F3E0056DD64 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9E5051171F5F3E0056DD64 /* Event.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		AF9A2747171E24A000757A4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TCMasterViewController.xib; sourceTree = "<group>"; };
 		AF9A274A171E24A000757A4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TCDetailViewController.xib; sourceTree = "<group>"; };
 		AF9A2751171E253400757A4F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AF9E5050171F5F3E0056DD64 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Model/Event.h; sourceTree = "<group>"; };
+		AF9E5051171F5F3E0056DD64 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = Model/Event.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 				AF9A2746171E24A000757A4F /* TCMasterViewController.xib */,
 				AF9A2749171E24A000757A4F /* TCDetailViewController.xib */,
 				AF9A273D171E24A000757A4F /* CoreDataTut.xcdatamodeld */,
+				AF9E5050171F5F3E0056DD64 /* Event.h */,
+				AF9E5051171F5F3E0056DD64 /* Event.m */,
 				AF9A272C171E24A000757A4F /* Supporting Files */,
 			);
 			path = CoreDataTut;
@@ -199,6 +204,7 @@
 				AF9A273F171E24A000757A4F /* CoreDataTut.xcdatamodeld in Sources */,
 				AF9A2742171E24A000757A4F /* TCMasterViewController.m in Sources */,
 				AF9A2745171E24A000757A4F /* TCDetailViewController.m in Sources */,
+				AF9E5052171F5F3E0056DD64 /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +335,7 @@
 				AF9A2750171E24A000757A4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
