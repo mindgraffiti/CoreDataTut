@@ -65,10 +65,13 @@
     if(results.count > 0){
         Event *event = [results objectAtIndex:0];
         
+        // this is where you'd update your UI, etc. rather than dumping the data to NSLog.
         NSLog(@"eventLatitude: %@", event.latitude);
         NSLog(@"eventLongitude: %@", event.longitude);
         NSLog(@"eventCreationDate: %@", event.creationDate);
-    }
+    } else {
+    NSLog(@"Nothing");
+}
     
 }
 #pragma mark - Location Manager
@@ -79,7 +82,7 @@
     if (_locationManager != nil) {
         return _locationManager;
     }
-    
+    // this is our customer getter
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     _locationManager.delegate = self;
